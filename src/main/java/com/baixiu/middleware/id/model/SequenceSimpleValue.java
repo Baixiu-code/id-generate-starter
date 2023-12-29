@@ -1,10 +1,13 @@
 package com.baixiu.middleware.id.model;
 
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.atomic.LongAdder;
+
 /**
  * @author baixiu
- * @date 创建时间 2023/12/22 4:09 PM
+ * @date 创建时间 2023/12/28 3:01 PM
  */
-public class SequenceStepModel {
+public class SequenceSimpleValue {
 
     /**
      * name sequence
@@ -12,9 +15,14 @@ public class SequenceStepModel {
     private String name;
 
     /**
-     * 起始值
+     * 模糊的 起始值
      */
-    private long start;
+    private LongAdder start;
+
+    /**
+     * 精准的 起始值
+     */
+    private AtomicLong preciseStart;
 
     /**
      * end 上限值
@@ -26,9 +34,9 @@ public class SequenceStepModel {
      */
     private long stepSize;
 
-    public SequenceStepModel(SequenceModel sequenceModel) {
+    public SequenceSimpleValue(SequenceModel sequenceModel) {
         this.name=sequenceModel.getName();
-        this.start=sequenceModel.getStart();
+        this.start.add(sequenceModel.getStart());
         this.end=sequenceModel.getEnd();
         this.stepSize=sequenceModel.getStepSize();
     }
@@ -41,11 +49,11 @@ public class SequenceStepModel {
         this.name = name;
     }
 
-    public long getStart() {
+    public LongAdder getStart() {
         return start;
     }
 
-    public void setStart(long start) {
+    public void setStart(LongAdder start) {
         this.start = start;
     }
 
@@ -63,5 +71,13 @@ public class SequenceStepModel {
 
     public void setStepSize(long stepSize) {
         this.stepSize = stepSize;
+    }
+
+    public AtomicLong getPreciseStart() {
+        return preciseStart;
+    }
+
+    public void setPreciseStart(AtomicLong preciseStart) {
+        this.preciseStart = preciseStart;
     }
 }

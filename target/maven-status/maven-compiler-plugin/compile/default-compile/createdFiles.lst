@@ -2,12 +2,13 @@ com/baixiu/middleware/id/config/SequenceConfig.class
 com/baixiu/middleware/id/api/IdGenerator.class
 com/baixiu/middleware/id/config/DataSourceConfig.class
 com/baixiu/middleware/id/consts/Consts.class
+com/baixiu/middleware/id/core/SequenceStepContextHolder.class
 com/baixiu/middleware/id/model/SequenceModel.class
 com/baixiu/middleware/id/core/InitSequenceConfigWare.class
 com/baixiu/middleware/id/config/SequenceConfigImpl.class
+com/baixiu/middleware/id/model/SequenceSimpleValue.class
 com/baixiu/middleware/id/dao/SequenceMapper.class
 com/baixiu/middleware/id/config/IdAutoBootConfig.class
 com/baixiu/middleware/id/api/impl/IdGeneratorImpl.class
-com/baixiu/middleware/id/model/SequenceStepModel.class
 com/baixiu/middleware/id/core/ReadWriteLockUtil.class
 com/baixiu/middleware/id/core/IdGeneratorCore.class

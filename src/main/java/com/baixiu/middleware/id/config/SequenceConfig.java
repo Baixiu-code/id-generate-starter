@@ -24,4 +24,10 @@ public interface SequenceConfig {
      */
     List<SequenceModel> allConfigs();
 
+    /**
+     * update sequence Model 
+     * @param sequenceModel sequence model
+     * @return config 
+     */
+    int saveConfigByLastEndValue(SequenceModel sequenceModel);
 }

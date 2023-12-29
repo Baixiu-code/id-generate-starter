@@ -25,4 +25,9 @@ public class SequenceConfigImpl implements SequenceConfig{
     public List<SequenceModel> allConfigs() {
         return sequenceMapper.listSequenceModel();
     }
+
+    @Override
+    public int saveConfigByLastEndValue(SequenceModel sequenceModel) {
+        return sequenceMapper.save(sequenceModel);
+    }
 }

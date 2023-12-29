@@ -4,6 +4,8 @@ import com.baixiu.middleware.id.model.SequenceModel;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
+
 import java.util.List;
 
 /**
@@ -29,4 +31,14 @@ public interface SequenceMapper {
      */
     @Select ("select * from sequence where name=#{name}")
     SequenceModel getSequenceConfigByName(@Param("name") String name);
+
+    /**
+     * update sequence config by version 
+     * @param data data 
+     * @return
+     */
+    @Update ("update set `start`=#{data.start},`end`=#{data.end},create_time=#{data.createTime},upate_time=now()" +
+            " where id=#{data.id} and `end`=#{data.end}")
+    int save(@Param ("data") SequenceModel data);
+    
 }

@@ -2,7 +2,7 @@ package com.baixiu.middleware.id.core;
 
 import com.baixiu.middleware.id.config.SequenceConfig;
 import com.baixiu.middleware.id.model.SequenceModel;
-import com.baixiu.middleware.id.model.SequenceStepModel;
+import com.baixiu.middleware.id.model.SequenceSimpleValue;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
@@ -21,7 +21,7 @@ public class InitSequenceConfigWare implements InitializingBean {
     @Resource
     private SequenceConfig sequenceConfig;
 
-    private Map<String, SequenceStepModel> ALL_STEPS=null;
+    private Map<String, SequenceSimpleValue> ALL_STEPS=null;
 
     @Override
     public void afterPropertiesSet() throws Exception {
@@ -29,7 +29,7 @@ public class InitSequenceConfigWare implements InitializingBean {
         if(!CollectionUtils.isEmpty(lists)){
             ALL_STEPS=new ConcurrentReferenceHashMap<>(lists.size(),0.75f);
             for (SequenceModel item : lists) {
-                ALL_STEPS.put(item.getName(),new SequenceStepModel(item));
+                ALL_STEPS.put(item.getName(),new SequenceSimpleValue(item));
             }
         }
     }
