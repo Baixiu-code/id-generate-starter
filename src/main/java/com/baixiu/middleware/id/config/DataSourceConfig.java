@@ -15,7 +15,6 @@ import javax.sql.DataSource;
 @EnableConfigurationProperties(DataSourceProperties.class)
 public class DataSourceConfig {
     @Bean
-    @ConfigurationProperties(prefix = "baixiu.id.datasource")
     public DataSource dataSource(DataSourceProperties properties) {
         return properties.initializeDataSourceBuilder().build();
     }
