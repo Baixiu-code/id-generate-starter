@@ -31,6 +31,11 @@ public class SequenceModel {
     private long end;
 
     /**
+     * end version .for update no lock 
+     */
+    private long endVersion;
+
+    /**
      * 步长 size
      */
     private long stepSize;
@@ -109,5 +114,13 @@ public class SequenceModel {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public long getEndVersion() {
+        return endVersion;
+    }
+
+    public void setEndVersion(long endVersion) {
+        this.endVersion = endVersion;
     }
 }

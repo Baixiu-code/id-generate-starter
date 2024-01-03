@@ -21,15 +21,13 @@ public class InitSequenceConfigWare implements InitializingBean {
     @Resource
     private SequenceConfig sequenceConfig;
 
-    private Map<String, SequenceSimpleValue> ALL_STEPS=null;
-
     @Override
     public void afterPropertiesSet() throws Exception {
         List<SequenceModel> lists= sequenceConfig.allConfigs();
         if(!CollectionUtils.isEmpty(lists)){
-            ALL_STEPS=new ConcurrentReferenceHashMap<>(lists.size(),0.75f);
             for (SequenceModel item : lists) {
-                ALL_STEPS.put(item.getName(),new SequenceSimpleValue(item));
+                SequenceSimpleValue sequenceSimpleValue=new SequenceSimpleValue(item);
+                SequenceStepContextHolder.ALL_SEQUENCE_CONTEXT.put(sequenceSimpleValue.getName(),sequenceSimpleValue);
             }
         }
     }

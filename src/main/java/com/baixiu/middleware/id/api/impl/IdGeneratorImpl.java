@@ -39,10 +39,11 @@ public class IdGeneratorImpl implements IdGenerator {
         //获取seqName对应的读写锁
         ReadWriteLock rwLock = ReadWriteLockUtil.RW_LOCKS[ReadWriteLockUtil.selectLock(sequenceName
                 , ReadWriteLockUtil.SEQ_ID_READ_WRITE_LOCK_NUM)];
-        rwLock.readLock();
+        
         //step1:find sequence Name local cache
         SequenceSimpleValue sequenceSimpleValue = null;
         try {
+            rwLock.readLock().lock();
             sequenceSimpleValue=SequenceStepContextHolder.ALL_SEQUENCE_CONTEXT.get(getSequenceName(tenantId,name));
             //step2:if exist .then get and increment return +1 
             if(Objects.nonNull(sequenceSimpleValue)){
@@ -50,9 +51,6 @@ public class IdGeneratorImpl implements IdGenerator {
                 if(sequenceSimpleValue.getPreciseStart().longValue()<sequenceSimpleValue.getEnd()){
                     return sequenceSimpleValue.getPreciseStart().incrementAndGet();
                 }
-                //模拟看看 longAdder 效率
-                sequenceSimpleValue.getStart().add(1);
-                log.info("sequenceSimpleValue.longAdder.value.{}",sequenceSimpleValue.getStart().sum());                  
             }
         } catch (Exception e) {
             log.error("generatorGlobalId.error.{}.{}",tenantId,name,e);
@@ -60,9 +58,10 @@ public class IdGeneratorImpl implements IdGenerator {
             rwLock.readLock().unlock ();
         }
         
-        //写入场景
-        rwLock.writeLock();
+        
         try {
+            //写入场景
+            rwLock.writeLock().lock();
             if(Objects.nonNull(sequenceSimpleValue)){
                 //存在且起始值满足条件时返回当前start value +1
                 if(sequenceSimpleValue.getPreciseStart().longValue()<sequenceSimpleValue.getEnd()){
@@ -91,14 +90,16 @@ public class IdGeneratorImpl implements IdGenerator {
 
     private long updateNextStepLengthToMapAndGet(SequenceModel sequenceModel,SequenceSimpleValue sequenceSimpleValue) {
         String sequenceName=getSequenceName(sequenceModel.getTenantId(),sequenceSimpleValue.getName());
-        sequenceSimpleValue.getPreciseStart().addAndGet(sequenceSimpleValue.getStepSize ());
-        sequenceSimpleValue.setEnd (sequenceSimpleValue.getEnd ()+sequenceSimpleValue.getStepSize ());
+        sequenceSimpleValue.getPreciseStart().addAndGet(1);
         //加1返回
         SequenceStepContextHolder.ALL_SEQUENCE_CONTEXT.put(sequenceName,sequenceSimpleValue);
-        return sequenceSimpleValue.getPreciseStart ().incrementAndGet ();
+        return sequenceSimpleValue.getPreciseStart ().longValue ();
     }
 
     private boolean updateNextStepLengthToDB(SequenceModel sequenceModel) {
+        String[]  sequencesNameAndTenantIds=sequenceModel.getName().split ("_");
+        sequenceModel.setTenantId(Long.parseLong (sequencesNameAndTenantIds[0]));
+        sequenceModel.setName(sequencesNameAndTenantIds[1]);
         int rs=sequenceConfig.saveConfigByLastEndValue(sequenceModel);
         if(rs>0){
             return true;
@@ -118,10 +119,10 @@ public class IdGeneratorImpl implements IdGenerator {
      */
     private SequenceModel getNextStepLength(SequenceSimpleValue sequenceSimpleValue) {
         SequenceModel sequenceModel=new SequenceModel ();
-        sequenceModel.setEnd (sequenceSimpleValue.getEnd()+sequenceSimpleValue.getStepSize());
-        sequenceModel.setStart (sequenceSimpleValue.getPreciseStart ().addAndGet (sequenceSimpleValue.getStepSize()));
-        sequenceModel.setName (sequenceSimpleValue.getName ());
-        sequenceModel.setCreateTime(new Date());
+        sequenceModel.setEndVersion(sequenceSimpleValue.getEnd ());
+        //最大值往后放stepSize 大小
+        sequenceModel.setEnd(sequenceSimpleValue.getEnd()+sequenceSimpleValue.getStepSize());
+        sequenceModel.setName(sequenceSimpleValue.getName());
         sequenceModel.setUpdateTime(new Date());
         return sequenceModel;
     }

@@ -1,10 +1,7 @@
 package com.baixiu.middleware.id.dao;
 
 import com.baixiu.middleware.id.model.SequenceModel;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -22,6 +19,12 @@ public interface SequenceMapper {
      * @return list config
      */
     @Select ("select * from sequence")
+    @Results(value = {
+            @Result(column = "tenant_id", property = "tenantId"),
+            @Result(column = "step_size", property = "stepSize"),
+            @Result(column = "create_time", property = "createTime"),
+            @Result(column = "update_time", property = "updateTime")
+    })
     List<SequenceModel> listSequenceModel();
 
     /**
@@ -30,6 +33,12 @@ public interface SequenceMapper {
      * @return sequence config
      */
     @Select ("select * from sequence where name=#{name}")
+    @Results(value = {
+            @Result(column = "tenant_id", property = "tenantId"),
+            @Result(column = "step_size", property = "stepSize"),
+            @Result(column = "create_time", property = "createTime"),
+            @Result(column = "update_time", property = "updateTime")
+    })
     SequenceModel getSequenceConfigByName(@Param("name") String name);
 
     /**
@@ -37,8 +46,8 @@ public interface SequenceMapper {
      * @param data data 
      * @return
      */
-    @Update ("update set `start`=#{data.start},`end`=#{data.end},create_time=#{data.createTime},upate_time=now()" +
-            " where id=#{data.id} and `end`=#{data.end}")
+    @Update("update sequence set `start`=#{data.start},`end`=#{data.end},update_time=#{data.updateTime}" +
+            " where tenant_id=#{data.tenantId} and `name`=#{data.name} and `end`=#{data.endVersion}")
     int save(@Param ("data") SequenceModel data);
     
 }

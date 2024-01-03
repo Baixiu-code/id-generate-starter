@@ -4,6 +4,7 @@ import com.baixiu.middleware.id.dao.SequenceMapper;
 import com.baixiu.middleware.id.model.SequenceModel;
 import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -28,6 +29,7 @@ public class SequenceConfigImpl implements SequenceConfig{
 
     @Override
     public int saveConfigByLastEndValue(SequenceModel sequenceModel) {
+        sequenceModel.setUpdateTime (new Date ());
         return sequenceMapper.save(sequenceModel);
     }
 }

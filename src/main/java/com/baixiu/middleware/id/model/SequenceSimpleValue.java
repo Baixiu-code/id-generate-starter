@@ -14,10 +14,6 @@ public class SequenceSimpleValue {
      */
     private String name;
 
-    /**
-     * 模糊的 起始值
-     */
-    private LongAdder start;
 
     /**
      * 精准的 起始值
@@ -35,8 +31,8 @@ public class SequenceSimpleValue {
     private long stepSize;
 
     public SequenceSimpleValue(SequenceModel sequenceModel) {
-        this.name=sequenceModel.getName();
-        this.start.add(sequenceModel.getStart());
+        this.name=sequenceModel.getTenantId()+"_"+sequenceModel.getName();
+        this.preciseStart=new AtomicLong(sequenceModel.getStart());
         this.end=sequenceModel.getEnd();
         this.stepSize=sequenceModel.getStepSize();
     }
@@ -49,13 +45,6 @@ public class SequenceSimpleValue {
         this.name = name;
     }
 
-    public LongAdder getStart() {
-        return start;
-    }
-
-    public void setStart(LongAdder start) {
-        this.start = start;
-    }
 
     public long getEnd() {
         return end;

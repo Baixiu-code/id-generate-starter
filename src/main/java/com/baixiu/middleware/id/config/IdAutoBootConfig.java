@@ -10,6 +10,5 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @EnableConfigurationProperties
-@ConditionalOnProperty(prefix="spring.datasource")
 public class IdAutoBootConfig {
 }
