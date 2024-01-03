@@ -105,6 +105,7 @@ public class IdGeneratorImpl implements IdGenerator {
             return true;
         }
         for(int i=0;i<10;i++){
+            rs = this.sequenceConfig.saveConfigByLastEndValue(sequenceModel);
             if(rs==1){
                 return true;
             }
