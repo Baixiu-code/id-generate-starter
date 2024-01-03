@@ -120,11 +120,13 @@ public class IdGeneratorImpl implements IdGenerator {
      */
     private SequenceModel getNextStepLength(SequenceSimpleValue sequenceSimpleValue) {
         SequenceModel sequenceModel=new SequenceModel ();
-        sequenceModel.setEndVersion(sequenceSimpleValue.getEnd ());
+        sequenceModel.setStart(sequenceModel.getStart());
+        sequenceModel.setEndVersion(sequenceSimpleValue.getEnd());
         //最大值往后放stepSize 大小
         sequenceModel.setEnd(sequenceSimpleValue.getEnd()+sequenceSimpleValue.getStepSize());
         sequenceModel.setName(sequenceSimpleValue.getName());
         sequenceModel.setUpdateTime(new Date());
+        
         return sequenceModel;
     }
 
