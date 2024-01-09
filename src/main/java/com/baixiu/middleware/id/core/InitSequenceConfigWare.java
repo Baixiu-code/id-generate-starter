@@ -6,12 +6,11 @@ import com.baixiu.middleware.id.model.SequenceSimpleValue;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
-import org.springframework.util.ConcurrentReferenceHashMap;
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.Map;
 
 /**
+ * initializingBean 扩展点。实现
  * @author baixiu
  * @date 创建时间 2023/12/22 4:04 PM
  */

@@ -39,17 +39,17 @@ public class IdGeneratorImpl implements IdGenerator {
         //获取seqName对应的读写锁
         ReadWriteLock rwLock = ReadWriteLockUtil.RW_LOCKS[ReadWriteLockUtil.selectLock(sequenceName
                 , ReadWriteLockUtil.SEQ_ID_READ_WRITE_LOCK_NUM)];
-        
+
         //step1:find sequence Name local cache
         SequenceSimpleValue sequenceSimpleValue = null;
         try {
             rwLock.readLock().lock();
-            sequenceSimpleValue=SequenceStepContextHolder.ALL_SEQUENCE_CONTEXT.get(getSequenceName(tenantId,name));
+            sequenceSimpleValue=SequenceStepContextHolder.ALL_SEQUENCE_CONTEXT.get(sequenceName);
             //step2:if exist .then get and increment return +1 
             if(Objects.nonNull(sequenceSimpleValue)){
                 //存在且起始值满足条件时返回当前start value +1
                 if(sequenceSimpleValue.getPreciseStart().longValue()<sequenceSimpleValue.getEnd()){
-                    return sequenceSimpleValue.getPreciseStart().incrementAndGet();
+                    return  sequenceSimpleValue.getPreciseStart().incrementAndGet();                    
                 }
             }
         } catch (Exception e) {
@@ -62,6 +62,8 @@ public class IdGeneratorImpl implements IdGenerator {
         try {
             //写入场景
             rwLock.writeLock().lock();
+            //这里要重新读取一次，防止第一个线程已经完成了stepSize的扩容操作，直接使用原来的读取将出现数据异常。我草
+            sequenceSimpleValue=SequenceStepContextHolder.ALL_SEQUENCE_CONTEXT.get(sequenceName);
             if(Objects.nonNull(sequenceSimpleValue)){
                 //存在且起始值满足条件时返回当前start value +1
                 if(sequenceSimpleValue.getPreciseStart().longValue()<sequenceSimpleValue.getEnd()){
@@ -89,11 +91,9 @@ public class IdGeneratorImpl implements IdGenerator {
     }
 
     private long updateNextStepLengthToMapAndGet(SequenceModel sequenceModel,SequenceSimpleValue sequenceSimpleValue) {
-        String sequenceName=getSequenceName(sequenceModel.getTenantId(),sequenceSimpleValue.getName());
-        sequenceSimpleValue.getPreciseStart().addAndGet(1);
         //加1返回
-        SequenceStepContextHolder.ALL_SEQUENCE_CONTEXT.put(sequenceName,sequenceSimpleValue);
-        return sequenceSimpleValue.getPreciseStart ().longValue ();
+        SequenceStepContextHolder.ALL_SEQUENCE_CONTEXT.put(sequenceSimpleValue.getName(),sequenceSimpleValue);
+        return sequenceSimpleValue.getPreciseStart().addAndGet(1);
     }
 
     private boolean updateNextStepLengthToDB(SequenceModel sequenceModel) {
@@ -120,10 +120,11 @@ public class IdGeneratorImpl implements IdGenerator {
      */
     private SequenceModel getNextStepLength(SequenceSimpleValue sequenceSimpleValue) {
         SequenceModel sequenceModel=new SequenceModel ();
-        sequenceModel.setStart(sequenceModel.getStart());
+        sequenceModel.setStart(sequenceSimpleValue.getPreciseStart ().longValue ());
         sequenceModel.setEndVersion(sequenceSimpleValue.getEnd());
         //最大值往后放stepSize 大小
         sequenceModel.setEnd(sequenceSimpleValue.getEnd()+sequenceSimpleValue.getStepSize());
+        sequenceSimpleValue.setEnd(sequenceSimpleValue.getEnd()+sequenceSimpleValue.getStepSize());        
         sequenceModel.setName(sequenceSimpleValue.getName());
         sequenceModel.setUpdateTime(new Date());
         
