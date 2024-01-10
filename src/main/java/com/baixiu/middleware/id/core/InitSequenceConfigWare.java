@@ -15,7 +15,7 @@ import java.util.List;
  * @date 创建时间 2023/12/22 4:04 PM
  */
 @Component
-public class InitSequenceConfigWare implements InitializingBean {
+public class InitSequenceConfigWare extends SequenceStepContextHolder implements InitializingBean {
 
     @Resource
     private SequenceConfig sequenceConfig;

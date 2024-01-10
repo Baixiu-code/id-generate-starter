@@ -21,7 +21,7 @@ import java.util.concurrent.locks.ReadWriteLock;
  */
 @Slf4j
 @Component
-public class IdGeneratorImpl implements IdGenerator {
+public class IdGeneratorImpl extends ReadWriteLockUtil implements IdGenerator {
     
     @Autowired
     private SequenceConfig sequenceConfig;
