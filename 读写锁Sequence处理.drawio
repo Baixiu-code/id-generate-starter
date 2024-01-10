@@ -1,9 +1,110 @@
-<mxfile host="app.diagrams.net" modified="2024-01-10T03:13:26.537Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" version="22.1.18" etag="q4exwVX0_Q9lOxUcIf9H" type="github">
+<mxfile host="app.diagrams.net" modified="2024-01-10T03:39:02.449Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" etag="sLH4tb1jPOINZ1dO-Wo2" version="22.1.18" type="github">
   <diagram name="第 1 页" id="IhkOamdP655drZ3ccuCS">
-    <mxGraphModel>
+    <mxGraphModel dx="1366" dy="569" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
+        <mxCell id="bndMZujfcZHY2hrptAQ_-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="370" y="240" as="targetPoint" />
+            <mxPoint x="370" y="170" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bndMZujfcZHY2hrptAQ_-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="bndMZujfcZHY2hrptAQ_-3" target="bndMZujfcZHY2hrptAQ_-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bndMZujfcZHY2hrptAQ_-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="bndMZujfcZHY2hrptAQ_-3" target="bndMZujfcZHY2hrptAQ_-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bndMZujfcZHY2hrptAQ_-3" value="get read lock" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="310" y="240" width="120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="bndMZujfcZHY2hrptAQ_-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="bndMZujfcZHY2hrptAQ_-4">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="370" y="480" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bndMZujfcZHY2hrptAQ_-4" value="&amp;nbsp;Holder 根据SequenceName 获取SequenceValue" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="245" y="340" width="250" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="bndMZujfcZHY2hrptAQ_-5" value="&lt;div style=&quot;background-color:#1e1f22;color:#a9b7c6;font-family:&#39;JetBrains Mono&#39;,monospace;font-size:11.3pt;&quot;&gt;&lt;pre&gt;&lt;div style=&quot;font-family: &amp;quot;JetBrains Mono&amp;quot;, monospace; font-size: 11.3pt;&quot;&gt;&lt;pre&gt;generatorGlobalId&lt;/pre&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/div&gt;" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="265" y="140" width="210" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="bndMZujfcZHY2hrptAQ_-6" value="容器启动之后大部分场景都是读场景,对于读场景,内部通过automicLong来实现自增即可,读之间共享锁即可" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="500" y="240" width="350" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="bndMZujfcZHY2hrptAQ_-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="bndMZujfcZHY2hrptAQ_-12" target="bndMZujfcZHY2hrptAQ_-14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bndMZujfcZHY2hrptAQ_-16" value="&amp;nbsp;null" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="bndMZujfcZHY2hrptAQ_-15">
+          <mxGeometry x="-0.4" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bndMZujfcZHY2hrptAQ_-21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="bndMZujfcZHY2hrptAQ_-12" target="bndMZujfcZHY2hrptAQ_-19">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bndMZujfcZHY2hrptAQ_-22" value="not null" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="bndMZujfcZHY2hrptAQ_-21">
+          <mxGeometry x="-0.0182" y="-2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bndMZujfcZHY2hrptAQ_-12" value="SequenceValue 是否为空" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="295" y="480" width="150" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="bndMZujfcZHY2hrptAQ_-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="bndMZujfcZHY2hrptAQ_-14" target="bndMZujfcZHY2hrptAQ_-17">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bndMZujfcZHY2hrptAQ_-14" value="throw exception&amp;nbsp;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="310" y="600" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="bndMZujfcZHY2hrptAQ_-17" value="end" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="315" y="690" width="110" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="bndMZujfcZHY2hrptAQ_-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="bndMZujfcZHY2hrptAQ_-19" target="bndMZujfcZHY2hrptAQ_-20">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bndMZujfcZHY2hrptAQ_-24" value="小于&amp;nbsp;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="bndMZujfcZHY2hrptAQ_-23">
+          <mxGeometry x="-0.2" y="2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bndMZujfcZHY2hrptAQ_-27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="bndMZujfcZHY2hrptAQ_-19" target="bndMZujfcZHY2hrptAQ_-26">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bndMZujfcZHY2hrptAQ_-19" value="判断 Sequencevalue 中&amp;nbsp;&lt;br&gt;startValue 是否小于 endValue" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="525" y="480" width="150" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="bndMZujfcZHY2hrptAQ_-25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="bndMZujfcZHY2hrptAQ_-20" target="bndMZujfcZHY2hrptAQ_-17">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="600" y="705" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bndMZujfcZHY2hrptAQ_-20" value="return increaseAndGetId" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="540" y="600" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="bndMZujfcZHY2hrptAQ_-30" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="bndMZujfcZHY2hrptAQ_-26" target="bndMZujfcZHY2hrptAQ_-31">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="800" y="590" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bndMZujfcZHY2hrptAQ_-26" value="&amp;nbsp;get write lock" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="740" y="485" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="bndMZujfcZHY2hrptAQ_-28" value="startValue大于或等于endValue 需要使用stepSize来更新起始值&lt;br&gt;涉及到修改场景,需要使用writeLock进行排他处理" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="610" y="390" width="350" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="bndMZujfcZHY2hrptAQ_-29" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.543;entryY=1;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="bndMZujfcZHY2hrptAQ_-26" target="bndMZujfcZHY2hrptAQ_-28">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bndMZujfcZHY2hrptAQ_-33" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="bndMZujfcZHY2hrptAQ_-31" target="bndMZujfcZHY2hrptAQ_-20">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bndMZujfcZHY2hrptAQ_-31" value="update DB and put new sequenceValue to map ." style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="740" y="600" width="120" height="60" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
