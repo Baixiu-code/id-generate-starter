@@ -37,9 +37,11 @@ public class IdGeneratorImpl extends ReadWriteLockUtil implements IdGenerator {
         String sequenceName=getSequenceName(tenantId,name);
         
         //获取seqName对应的读写锁
+        //这里在原有基础上(单个 ReadWriteLock 去完成不同 SequenceName 的读写逻辑)生产了不同的 rwLock 用以保证在不同
+        //SequenceName 的竞争过程中去分别完成不同锁持有,隔离并发处理.
         ReadWriteLock rwLock = ReadWriteLockUtil.RW_LOCKS[ReadWriteLockUtil.selectLock(sequenceName
                 , ReadWriteLockUtil.SEQ_ID_READ_WRITE_LOCK_NUM)];
-
+        
         //step1:find sequence Name local cache
         SequenceSimpleValue sequenceSimpleValue = null;
         try {
@@ -63,6 +65,8 @@ public class IdGeneratorImpl extends ReadWriteLockUtil implements IdGenerator {
             //写入场景
             rwLock.writeLock().lock();
             //这里要重新读取一次，防止第一个线程已经完成了stepSize的扩容操作，直接使用原来的读取将出现数据异常。我草
+            //具体是:第一个线程已经做完成重置步长并重新set 到 localCache 且完成了 unlock(line 90).这时候第二个线程进入 lock(第 66 line.)
+            //这时候不可避免的需要进行二次获取(line 70),不然就可能导致二次覆盖
             sequenceSimpleValue=SequenceStepContextHolder.ALL_SEQUENCE_CONTEXT.get(sequenceName);
             if(Objects.nonNull(sequenceSimpleValue)){
                 //存在且起始值满足条件时返回当前start value +1
